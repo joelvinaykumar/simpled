@@ -2,6 +2,5 @@
 
 My simple practice playground while learning rebass component UI in react.js
 
-[👉 Website Live here]('https://simpled-dev.web.app/')
-
+<a href="https://simpled-dev.web.app/" alt="website">👉 Website Live here</a>
 
