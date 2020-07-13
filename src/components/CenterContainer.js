@@ -33,7 +33,7 @@ export const CenterContainer = ()=> {
         style={mainStyle}
         width='85vw'
       >
-        <Box width={[0.7,0.4]}>
+        <Box width={[0.7,0.6]}>
           {posts.map(item => (
             <PostCard key={item.id} post={item} />
           ))}

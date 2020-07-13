@@ -35,7 +35,7 @@ export const PostBox = ()=> {
     >
       <Box
         p={5}
-        width={[1,0.5]}
+        width={[1,0.8]}
         className='animate__animated animate__bounceInDown'
       >
         <form onSubmit={handleSubmit}>
