@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/firestore'
 
 var firebaseConfig = {
@@ -8,8 +8,8 @@ var firebaseConfig = {
   projectId: "simpled-dev",
   storageBucket: "simpled-dev.appspot.com",
   messagingSenderId: "339107922375",
-  appId: "1:339107922375:web:393131b67713b82a0f19e2",
-  measurementId: "G-B6QZ4BTYFW"
+  appId: "1:339107922375:web:5dc5eab2b67df1930f19e2",
+  measurementId: "G-GFXSPQST24"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

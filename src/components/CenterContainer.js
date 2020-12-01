@@ -1,45 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Box, Text } from 'rebass';
+import { Flex, Box } from 'rebass';
 import { PostCard } from './PostCard';
 import firebase from '../firebase';
 
-const usePosts = ()=> {
+export const CenterContainer = ()=> {
   const [posts, setPosts] = useState([])
 
   useEffect(()=> {
-    const unsubscribe = firebase
+    const fetchPosts = () => firebase
       .firestore()
       .collection('posts')
-      .onSnapshot(snapshot =>{
+      .onSnapshot(snapshot => {
         const newPosts = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }))
-
+        console.log(newPosts)
         setPosts(newPosts)
       })
-      return ()=> unsubscribe;
-
+    fetchPosts();
   }, [])
 
-  return posts;
-}
+  console.log('ksuhjdbf', posts);
 
-export const CenterContainer = ()=> {
-  const posts = usePosts();
-    return (
-      <Flex
-        justifyContent='center'
-        style={mainStyle}
-        width='85vw'
-      >
-        <Box width={[0.7,0.6]}>
-          {posts.map(item => (
-            <PostCard key={item.id} post={item} />
-          ))}
-        </Box>
-      </Flex>
-    );
+  return (
+    <Flex
+      justifyContent='center'
+      style={mainStyle}
+      width='85vw'
+    >
+      <Box width={[0.7,0.6]}>
+        {posts.map(item => (
+          <PostCard key={item.id} post={item} />
+        ))}
+      </Box>
+    </Flex>
+  );
 }
 
 const mainStyle = {

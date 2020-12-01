@@ -9,10 +9,10 @@ export const PostBox = ()=> {
   const [username, setUsername] = useState('');
   const [post, setPost] = useState('');
 
-  function handleSubmit(e) {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    firebase
+    await firebase
       .firestore()
       .collection('posts')
       .add({
@@ -20,11 +20,8 @@ export const PostBox = ()=> {
         postedBy: username,
         postedAt: new Date().toUTCString()
       })
-      .then(()=> {
-        setUsername('')
-        setPost('')
-      })
-
+    setPost('');
+    setUsername('');
   }
   return (
     <Flex
@@ -64,6 +61,7 @@ export const PostBox = ()=> {
             my={3}
             className="button"
             width={1}
+            style={{cursor: 'pointer'}}
           >
             Post
           </Button>
