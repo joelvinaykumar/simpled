@@ -1,13 +1,14 @@
 import 'animate.css'
 import firebase from '../firebase'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Flex, Button } from 'rebass';
 import { Textarea, Input } from '@rebass/forms'
 
 
 export const PostBox = ()=> {
-  const [username, setUsername] = useState('');
-  const [post, setPost] = useState('');
+  const [username, setUsername] = useState(null);
+  const [post, setPost] = useState(null);
+  const [error, setError] = useState('')
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -23,16 +24,24 @@ export const PostBox = ()=> {
     setPost('');
     setUsername('');
   }
+
+  useEffect(() =>{
+    if(username==='' || post===''){
+      setError('Cannot post empty toot')
+    }
+  }, [username,post])
+  
   return (
     <Flex
       alignItems='center'
       justifyContent='center'
       style={mainStyle}
-      width='85vw'
+      width='100vw'
+      mt={40}
     >
       <Box
         p={5}
-        width={[1,0.8]}
+        width={0.6}
         className='animate__animated animate__bounceInDown'
       >
         <form onSubmit={handleSubmit}>
@@ -67,10 +76,11 @@ export const PostBox = ()=> {
           </Button>
         </form>
       </Box>
+      {error.length>0 && alert(error)}
     </Flex>
   )
 }
 
 const mainStyle = {
-  float: 'right'
+
 }

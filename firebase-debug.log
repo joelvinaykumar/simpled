@@ -1,0 +1,44 @@
+[debug] [2020-12-01T15:21:05.123Z] ----------------------------------------------------------------------
+[debug] [2020-12-01T15:21:05.128Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tony Stark\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-12-01T15:21:05.128Z] CLI Version:   8.14.1
+[debug] [2020-12-01T15:21:05.129Z] Platform:      win32
+[debug] [2020-12-01T15:21:05.129Z] Node Version:  v14.8.0
+[debug] [2020-12-01T15:21:05.131Z] Time:          Tue Dec 01 2020 20:51:05 GMT+0530 (India Standard Time)
+[debug] [2020-12-01T15:21:05.132Z] ----------------------------------------------------------------------
+[debug] [2020-12-01T15:21:05.132Z] 
+[debug] [2020-12-01T15:21:05.231Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-12-01T15:21:05.232Z] > authorizing via signed-in user
+[debug] [2020-12-01T15:21:05.233Z] [iam] checking project simpled-dev for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-12-01T15:21:05.237Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-12-01T15:21:05.237Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-12-01T15:21:05.517Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","date":"Tue, 01 Dec 2020 15:21:01 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-01T15:21:05.818Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/simpled-dev:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-12-01T15:21:07.477Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 01 Dec 2020 15:21:03 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1476","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-01T15:21:07.479Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project simpled-dev:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2020-12-01T15:21:07.484Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/simpled-dev  
+ 
+[debug] [2020-12-01T15:21:08.064Z] <<< HTTP RESPONSE 403 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Tue, 01 Dec 2020 15:21:04 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-01T15:21:08.065Z] <<< HTTP RESPONSE BODY {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2020-12-01T15:21:08.066Z] HTTP Error: 403, The caller does not have permission
+[debug] [2020-12-01T15:21:08.257Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (C:\Users\Tony Stark\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:38:12)
+    at Request._callback (C:\Users\Tony Stark\AppData\Roaming\npm\node_modules\firebase-tools\lib\api.js:41:35)
+    at Request.self.callback (C:\Users\Tony Stark\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
+    at Request.emit (events.js:314:20)
+    at Request.EventEmitter.emit (domain.js:486:12)
+    at Request.<anonymous> (C:\Users\Tony Stark\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1154:10)
+    at Request.emit (events.js:314:20)
+    at Request.EventEmitter.emit (domain.js:486:12)
+    at IncomingMessage.<anonymous> (C:\Users\Tony Stark\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1076:12)
+    at Object.onceWrapper (events.js:420:28)
+    at IncomingMessage.emit (events.js:326:22)
+    at IncomingMessage.EventEmitter.emit (domain.js:486:12)
+    at endReadableNT (_stream_readable.js:1244:12)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+[error] 
+[error] Error: Failed to get Firebase project simpled-dev. Please make sure the project exists and your account has permission to access it.

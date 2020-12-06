@@ -9,7 +9,9 @@ export class PostCard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      animateDelete: false
+      animateDelete: false,
+      error: '',
+      ...this.props.post
     }
   }
 
@@ -20,6 +22,12 @@ export class PostCard extends Component {
       .collection('posts')
       .doc(id)
       .delete()
+  }
+
+  componentDidMount() {
+    if(!this.state.message) {
+      this.setState({ error: 'Cannot post an empty toot' });
+    }
   }
 
   render() {
@@ -39,14 +47,15 @@ export class PostCard extends Component {
         alignItems='center'
         justifyContent='center'
         py={3}
+        mt={100}
       >
         <Card
           bg='white'
           px={4}
           py={3}
           className={animateDelete? 
-                    ' animate__animated animate__fadeOutDown': 
-                    'animate__animated animate__fadeInDown'}
+                    ' animate__animated animate__fadeOutUp': 
+                    'animate__animated animate__fadeInUp'}
           style={{
             borderRadius: 8,
             boxShadow: '4px 4px 15px #ddd'
@@ -65,7 +74,7 @@ export class PostCard extends Component {
                 {postedBy}
               </Text>
               <Text fontSize='12px'>
-                {postedAt? postedAt : ''}
+                {postedAt}
               </Text>
             </Flex>
             <Image 

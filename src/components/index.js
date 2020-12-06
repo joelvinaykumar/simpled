@@ -1,5 +1,4 @@
-export * from './Home';
-export * from './Sidebar';
+export * from './Navbar';
 export * from './PostBox';
 export * from './CenterContainer';
 export * from './PostCard';

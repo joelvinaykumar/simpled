@@ -3,22 +3,20 @@ import { Flex, Image, Box } from 'rebass';
 
 import logo from '../assets/logo.png'
 
-export class Sidebar extends Component {
+export class Navbar extends Component {
   render() {
     return ( 
       <Flex>
         <Flex
           fontSize={['14px', '20px']}
-          className='animate__animated animate__fadeInLeft'
+          className='animate__animated animate__bounceInDown'
           style={sidebarStyle}
           width={'15%'}
         >
           <Image src={logo} width='150px' />
-          <Box className='sidebar-menu'>
-            <ul>
-              <li><a href='/'>Home</a></li>
-              <li><a href='/profile'>Profile</a></li>
-            </ul>
+          <Box className='sidebar-menu' style={menuStyle}>
+              <a href='/'>Home</a>
+              <a href='/profile'>404</a>
           </Box>
         </Flex>
       </Flex>
@@ -28,20 +26,25 @@ export class Sidebar extends Component {
 
 
 const baseCss = {
-  height:'100vh',
+  height:'100px',
+  width: '100vw',
   color: 'yellow',
-  padding: '5vh 0 10vh 0',
+  padding: '0 60px',
   position:'fixed',
-  flexDirection: 'column',
+  flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
   backgroundColor:'#07031a',
 }
 const sidebarStyle = {
   ...baseCss,
-  
 }
 
 const suggestionStyle = {
   ...baseCss,
+}
+
+const menuStyle = {
+  display: 'flex',
+  flexDirection: 'row'
 }

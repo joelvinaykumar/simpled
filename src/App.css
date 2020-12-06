@@ -22,4 +22,5 @@ body {
 .sidebar-menu a {
   color: yellow;
   text-decoration: none;
+  padding-right: 30px;
 }

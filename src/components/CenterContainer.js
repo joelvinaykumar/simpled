@@ -3,6 +3,8 @@ import { Flex, Box } from 'rebass';
 import { PostCard } from './PostCard';
 import firebase from '../firebase';
 
+import { PostBox } from './PostBox'
+
 export const CenterContainer = ()=> {
   const [posts, setPosts] = useState([])
 
@@ -21,23 +23,20 @@ export const CenterContainer = ()=> {
     fetchPosts();
   }, [])
 
-  console.log('ksuhjdbf', posts);
-
   return (
     <Flex
       justifyContent='center'
-      style={mainStyle}
-      width='85vw'
+      alignItems='center'
+      flexDirection='column'
+      width='100vw'
+      style={{ position: 'relative' }}
     >
-      <Box width={[0.7,0.6]}>
+      <PostBox />
+      <Box width={0.5} mt={-80}>
         {posts.map(item => (
           <PostCard key={item.id} post={item} />
         ))}
       </Box>
     </Flex>
   );
-}
-
-const mainStyle = {
-  float: 'right'
 }
