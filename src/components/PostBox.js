@@ -1,35 +1,37 @@
 import 'animate.css'
-import firebase from '../firebase'
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Button } from 'rebass';
-import { Textarea, Input } from '@rebass/forms'
+import { Box, Flex, Button, Text } from 'rebass';
+import { Textarea } from '@rebass/forms'
 
+import { db } from '../firebase'
+import { useAuth } from '../contexts/AuthContext';
 
 export const PostBox = ()=> {
-  const [username, setUsername] = useState(null);
   const [post, setPost] = useState(null);
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
+
+  const { currentUser } = useAuth();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    await firebase
-      .firestore()
+    await db
       .collection('posts')
       .add({
         message: post,
-        postedBy: username,
+        createdBy: currentUser.email,
+        likes: 0,
+        dislikes: 0,
         postedAt: new Date().toUTCString()
       })
     setPost('');
-    setUsername('');
   }
 
   useEffect(() =>{
-    if(username==='' || post===''){
+    if(post===''){
       setError('Cannot post empty toot')
     }
-  }, [username,post])
+  }, [])
   
   return (
     <Flex
@@ -37,7 +39,7 @@ export const PostBox = ()=> {
       justifyContent='center'
       style={mainStyle}
       width='100vw'
-      mt={40}
+      my={40}
     >
       <Box
         p={5}
@@ -45,16 +47,6 @@ export const PostBox = ()=> {
         className='animate__animated animate__bounceInDown'
       >
         <form onSubmit={handleSubmit}>
-          <Input
-            my={3}
-            id='name'
-            type='text'
-            value={username}
-            onChange={e => setUsername(e.currentTarget.value)}
-            name='userName'
-            style={{borderRadius:5}}
-            placeholder='My name is...'
-          />
           <Textarea
             id='post'
             name='post'
@@ -72,8 +64,9 @@ export const PostBox = ()=> {
             width={1}
             style={{cursor: 'pointer'}}
           >
-            Post
+            Toot
           </Button>
+          <Text fontStyle="italic" fontWeight={600} textAlign="center">Honey tip🍯: Just double tapp a post to like</Text>
         </form>
       </Box>
       {error.length>0 && alert(error)}

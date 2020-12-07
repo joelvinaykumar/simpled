@@ -11,7 +11,8 @@ export class PostCard extends Component {
     this.state = {
       animateDelete: false,
       error: '',
-      ...this.props.post
+      ...this.props.post,
+      likes: 0
     }
   }
 
@@ -24,18 +25,30 @@ export class PostCard extends Component {
       .delete()
   }
 
-  componentDidMount() {
-    if(!this.state.message) {
-      this.setState({ error: 'Cannot post an empty toot' });
-    }
+  handleLikes = async (post) => {
+    await firebase
+      .firestore()
+      .collection('posts')
+      .doc(post.id)
+      .set({...post, likes: post.likes+1})
+  }
+
+  handleDisikes = async (post) => {
+    await firebase
+      .firestore()
+      .collection('posts')
+      .doc(post.id)
+      .set({...post, dislikes: post.dislikes+1})
   }
 
   render() {
     const {
       id, 
-      postedBy='', 
-      message='', 
-      postedAt
+      createdBy, 
+      message, 
+      postedAt,
+      likes,
+      dislikes
     } = this.props.post;
 
     const sleep = m=> new Promise(r => setTimeout(r, m));
@@ -47,7 +60,8 @@ export class PostCard extends Component {
         alignItems='center'
         justifyContent='center'
         py={3}
-        mt={100}
+        mt={10}
+        width={0.5}
       >
         <Card
           bg='white'
@@ -70,20 +84,15 @@ export class PostCard extends Component {
               justifyContent='space-between'
               width={1}
             >
-              <Text fontSize='16px' fontWeight={800} py={2}>
-                {postedBy}
+              <Text fontSize={16} fontWeight={600} color="#2A2A2A" py={2}>
+                {createdBy}
               </Text>
-              <Text fontSize='12px'>
+              <Text fontSize={12} fontStyle="italic" color="grey">
                 {postedAt}
               </Text>
             </Flex>
-            <Image 
-              src='https://image.flaticon.com/icons/svg/60/60761.svg'
-              width={15}
-              onClick={async()=> {this.setState({animateDelete:true});await sleep(500);this.deletePost(id)}}
-            />
           </Flex>
-          <Box>
+          <Box onDoubleClick={() => this.handleLikes(this.props.post)}>
             <Text fontWeight={400} fontSize='16px' py={4}>
               {message}
             </Text>
@@ -92,13 +101,25 @@ export class PostCard extends Component {
             my={3}
             justifyContent='space-between'
           >
-            <Text fontSize={1}><span role='img' aria-label='views'>👁️</span> {Math.ceil(Math.random()*10)}</Text>
-            <Text fontSize={1}><span role='img' aria-label='reshare'>🔁</span> {Math.ceil(Math.random()*10)}</Text>
-            <Text fontSize={1}><span role='img' aria-label='comment'>💬</span> {Math.ceil(Math.random()*10)}</Text>
-            <Text fontSize={1}><span role='img' aria-label='likes'>❤️</span> {Math.ceil(Math.random()*10)}</Text>
+            <Text fontSize={1} onClick={() => this.handleDisikes(this.props.post)}>
+              <span style={{...iconStyle, marginRight: 4}}>👎</span>
+              {dislikes}
+            </Text>
+            <Text fontSize={1} onClick={() => this.handleLikes(this.props.post)}>
+              <span style={iconStyle}>❤️</span>
+              {likes}
+            </Text>
+            <Image 
+              src='https://image.flaticon.com/icons/svg/60/60761.svg'
+              width={15}
+              style={iconStyle}
+              onClick={async()=> {this.setState({animateDelete:true});await sleep(500);this.deletePost(id)}}
+            />
           </Flex>
         </Card>
       </Flex>
     )
   }
 }
+
+const iconStyle = {cursor: 'pointer'}

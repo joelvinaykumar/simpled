@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "animate.css": "^4.1.0",
+    "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
     "firebase": "^7.15.5",
     "randomuser": "^1.2.0",

@@ -1,50 +1,47 @@
 import 'animate.css'
-import firebase from '../firebase'
 import React, { useState } from 'react';
-import { Text, Box, Flex, Button, Image } from 'rebass';
+import { Link, useHistory } from 'react-router-dom';
+import { Text, Flex, Button, Image } from 'rebass';
 import { Input } from '@rebass/forms'
 
 import logo from '../assets/logo.png'
 import google from '../assets/google.png'
-import { Redirect } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext'
 
-export const SignUp = ({ history })=> {
+export const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('')
+  const [success, setSuccess] = useState('');
+
+  const { signup, loginWIthGoogle, updateProfile } = useAuth();
+  const history = useHistory();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+
     if(email==='' || password==='') {
       setError('Email/Password field empty')
     } else {
       try {
-        const response = await firebase.auth().createUserWithEmailAndPassword(email, password)
-        if(response.refresh_token) {
-          setSuccess('Account Created. You may login now.')
-          window.top.location.pathname ="/login";
-        }else {
-          setError('User creation failed')
-        }
+        await signup(email, password);
+        setSuccess('Account Created. You may login now.')
+        history.push('/login')
       } catch(error) {
         setError(error.message)
       }
     }
   }
 
-  const handleGoogleAuth = async(e) => {
+  const handleGoogleAuth = async () => {
     try {
-      const googleProvider = new firebase.auth.GoogleAuthProvider();
-      const response = await firebase.auth().signInWithPopup(googleProvider);
-      if(response.credential.accessToken) {
-        setSuccess('Account Created. You may login now.')
-        window.top.location.pathname = "/";
-      }      
+      await loginWIthGoogle();
+      setSuccess('Login successful');
+      history.push('/')
     }catch(error) {
-      setError(error.message)
-    }
+      setError(error.message);
+    };
   }
 
   return (
@@ -60,17 +57,21 @@ export const SignUp = ({ history })=> {
         height={400}
       >
         <Image style={{borderRadius: 20}} src={logo} width={100} backgroundColor="black" />
-        <b><Text mt={30} fontSize={16} textAlign="center">
-          Simpled is nothing but a short form of simplified
+        <b><Text mt={30} fontSize={18} textAlign="center">
+          Simpled is simplified "simplified"
         </Text></b>
         <Text mt={0} fontSize={14} width={350} textAlign="center">
-          Signup using email password or just single-sign-on with Google
+          Already have an account? Login <Link to="/login">here</Link>
+        </Text>
+        <Text mt={10} fontSize={18} width={350} fontWeight={600} textAlign="center">
+          Sign Up
         </Text>
         <Input
           my={3}
           id='email'
           type='text'
           value={email}
+          required
           onChange={e => setEmail(e.currentTarget.value)}
           name='email'
           style={{borderRadius:5}}
@@ -81,6 +82,7 @@ export const SignUp = ({ history })=> {
           id='password'
           type='password'
           value={password}
+          required
           onChange={e => setPassword(e.currentTarget.value)}
           name='password'
           style={{borderRadius:5}}

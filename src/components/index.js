@@ -3,3 +3,4 @@ export * from './PostBox';
 export * from './CenterContainer';
 export * from './PostCard';
 export * from './404';
+export * from './PrivateRoute'

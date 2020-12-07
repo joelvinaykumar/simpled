@@ -8,19 +8,10 @@
 
 body {
   background-color: #f4f6ff;
+  overflow: scroll;
+  height: 100px;
 }
 
 .animate__animated {
   animation-duration: 500ms;
-}
-
-.sidebar-menu li {
-  list-style: none;
-  padding: 2vh 0;
-}
-
-.sidebar-menu a {
-  color: yellow;
-  text-decoration: none;
-  padding-right: 30px;
 }
