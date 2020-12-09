@@ -31,7 +31,7 @@ export const PostBox = ()=> {
     if(post===''){
       setError('Cannot post empty toot')
     }
-  }, [])
+  }, [post])
   
   return (
     <Flex

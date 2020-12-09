@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Box, Text } from "rebass";
+import { Flex } from "rebass";
 import { PostCard } from "./PostCard";
 import { db } from "../firebase";
 
 import { PostBox } from "./PostBox";
-import { useAuth } from "../contexts/AuthContext";
 
 export const CenterContainer = () => {
   const [posts, setPosts] = useState([]);
-
-  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchPosts = () =>

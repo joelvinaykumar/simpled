@@ -1,6 +1,6 @@
 import "animate.css";
 import React, { useState, useEffect } from "react";
-import { Text, Flex, Button, Card, Box } from "rebass";
+import { Text, Flex, Button, Card } from "rebass";
 import { Input } from "@rebass/forms";
 
 import { useAuth } from "../contexts/AuthContext";
@@ -39,11 +39,11 @@ export const Profile = () => {
           setPosts(newPosts);
         });
     fetchPosts();
-  }, []);
+  }, [currentUser.email, profile]);
 
   useEffect(() => {
     setUser(profile);
-  }, []);
+  }, [profile]);
 
   const labels = {
     displayName: "Name",

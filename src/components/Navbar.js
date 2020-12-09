@@ -55,7 +55,6 @@ export const Navbar = () => {
 const navBarStyle = {
   height: "100px",
   color: "yellow",
-  position: "-webkit-sticky",
   position: "sticky",
   top: "100px",
   width: "100%",

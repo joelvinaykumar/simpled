@@ -15,7 +15,7 @@ export const SignUp = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const { signup, loginWIthGoogle, updateProfile } = useAuth();
+  const { signup, loginWIthGoogle } = useAuth();
   const history = useHistory();
 
   const handleSubmit = async(e) => {
@@ -60,7 +60,7 @@ export const SignUp = () => {
         <b><Text mt={30} fontSize={18} textAlign="center">
           Simpled is simplified "simplified"
         </Text></b>
-        <Text mt={0} fontSize={14} width={350} textAlign="center">
+        <Text mt={20} fontSize={14} width={350} textAlign="center">
           Already have an account? Login <Link to="/login">here</Link>
         </Text>
         <Text mt={10} fontSize={18} width={350} fontWeight={600} textAlign="center">
