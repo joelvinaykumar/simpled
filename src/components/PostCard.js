@@ -102,11 +102,11 @@ export class PostCard extends Component {
             justifyContent='space-between'
           >
             <Text fontSize={1} onClick={() => this.handleDisikes(this.props.post)}>
-              <span  role="img" style={{...iconStyle, marginRight: 4}}>👎</span>
+              <span  role="img" aria-label="dislike" style={{...iconStyle, marginRight: 4}}>👎</span>
               {dislikes}
             </Text>
             <Text fontSize={1} onClick={() => this.handleLikes(this.props.post)}>
-              <span  role="img" style={iconStyle}>❤️</span>
+              <span  role="img" aria-label="like" style={iconStyle}>❤️</span>
               {likes}
             </Text>
             <Image 

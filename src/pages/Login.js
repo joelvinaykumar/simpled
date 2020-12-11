@@ -8,6 +8,8 @@ import { useAuth } from '../contexts/AuthContext'
 import logo from '../assets/logo.png'
 import google from '../assets/google.png'
 
+const imageUrl = 'https://image.shutterstock.com/image-vector/pixel-art-seamless-ba-ckground-location-260nw-749130553.jpg';
+
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -121,3 +123,9 @@ const GoogleButtonStyle = {
   justifyContent: 'space-around',
   alignItems: 'center'
 };
+
+const loginPageStyle = {
+  backgroundImage: `url(${imageUrl})`,
+  backgroundSize: 'cover',
+  backgroundColor: 'rgba(244, 246, 255, 0.5)'
+}

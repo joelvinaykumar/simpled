@@ -66,7 +66,9 @@ export const PostBox = ()=> {
           >
             Toot
           </Button>
-          <Text fontStyle="italic" fontWeight={600} textAlign="center">Honey tip🍯: Just tapp tapp a post to like</Text>
+          <Text fontStyle="italic" fontWeight={600} textAlign="center">
+            Honey tip <span role="img" aria-label="honey">🍯</span>: Just tapp tapp a post to like
+          </Text>
         </form>
       </Box>
       {error.length>0 && alert(error)}
