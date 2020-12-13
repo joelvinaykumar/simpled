@@ -1,35 +1,19 @@
 import 'animate.css'
 import React, { useEffect, useState } from 'react';
 import { Box, Flex, Button, Text } from 'rebass';
-import { Input, Textarea } from '@rebass/forms';
+import { Textarea } from '@rebass/forms';
 
-import { db, storage } from '../firebase'
+import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext';
 
 export const PostBox = ()=> {
   const [post, setPost] = useState(null);
   const [error, setError] = useState('');
-  const [photo, setPhoto] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
 
   const { currentUser } = useAuth();
 
-  console.log(photo)
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if(photo !== null) {
-      const uploadTask = storage.ref(`images/${photo.name}`).put(photo);
-      uploadTask.on(
-        "state_changesd", 
-        snapshot => {}, 
-        err => console.log(err),
-        () => {
-          storage.ref('images').child(photo.name).getDownloadURL().then(url => setImageUrl(url))
-        }
-      )
-    }
 
     await db
       .collection('posts')
@@ -39,18 +23,9 @@ export const PostBox = ()=> {
         picture: currentUser.photoURL,
         likes: [],
         dislikes: [],
-        imageUrl: imageUrl,
         postedAt: new Date().toUTCString()
       })
     setPost('');
-  }
-
-  const handleUpload = async (e) => {
-
-    if(e.target.files[0]) {
-      e.preventDefault();
-      setPhoto(e.target.files[0])
-    }
   }
 
   useEffect(() =>{
@@ -78,12 +53,6 @@ export const PostBox = ()=> {
             onChange={e => setPost(e.currentTarget.value)}
             style={{borderRadius:5}}
             placeholder='I want to say...'
-          />
-          <Input 
-            type="file" 
-            accept=".png,.jpeg,.jpg" 
-            value={photo} 
-            onChange={handleUpload} 
           />
           <Button
             onClick={handleSubmit}

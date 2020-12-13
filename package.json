@@ -12,13 +12,13 @@
     "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
     "firebase": "^7.15.5",
-    "preview-url-component": "^1.0.3",
     "randomuser": "^1.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-spring": "^8.0.27",
+    "react-tiny-link": "^3.6.0",
     "rebass": "^4.0.7"
   },
   "scripts": {
