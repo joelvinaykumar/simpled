@@ -18,11 +18,6 @@ export class PostCard extends Component {
     }
   }
 
-  componentDidMount() {
-    const { currentUser } = useAuth();
-    console.log(currentUser)
-  }
-
   COLLECTION_NAME = 'posts';
 
   deletePost(id) {
@@ -171,7 +166,7 @@ export class PostCard extends Component {
               <span  role="img" aria-label="like" style={iconStyle}>❤️</span>
               {likes.length}
             </Text>
-            {createdBy===(currentUser.email) && <Image 
+            {true && <Image 
               src='https://image.flaticon.com/icons/svg/60/60761.svg'
               width={15}
               style={iconStyle}
