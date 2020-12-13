@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
   }
 
   const updateProfile = async (name, picture) => {
-    console.log(name, picture)
     await auth.currentUser.updateProfile({
       displayName: name,
       photoURL: picture

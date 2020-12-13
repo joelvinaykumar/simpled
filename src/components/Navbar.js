@@ -58,7 +58,7 @@ const navBarStyle = {
   position: "sticky",
   top: "100px",
   width: "100%",
-  padding: "0 60px",
+  padding: "0 30px",
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",

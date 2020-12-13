@@ -85,6 +85,7 @@ export const Login = () => {
           value={password}
           onChange={e => setPassword(e.currentTarget.value)}
           name='password'
+          placeholder="********"
           style={{borderRadius:5}}
         />
         <Button
@@ -93,6 +94,7 @@ export const Login = () => {
           bg='#07031a'
           my={3}
           width={1}
+          height={["100px", "150px"]}
           style={{cursor: 'pointer'}}
           onClick={handleSubmit}
         >
@@ -123,9 +125,3 @@ const GoogleButtonStyle = {
   justifyContent: 'space-around',
   alignItems: 'center'
 };
-
-const loginPageStyle = {
-  backgroundImage: `url(${imageUrl})`,
-  backgroundSize: 'cover',
-  backgroundColor: 'rgba(244, 246, 255, 0.5)'
-}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Flex, Card, Text, Image, Box } from 'rebass';
+import Preview from  'preview-url-component';
 
 import 'animate.css'
 import firebase from '../firebase'
@@ -16,29 +17,63 @@ export class PostCard extends Component {
     }
   }
 
+  COLLECTION_NAME = 'posts';
+
   deletePost(id) {
     this.setState({ animateDelete:true })
     firebase
       .firestore()
-      .collection('posts')
+      .collection(this.COLLECTION_NAME)
       .doc(id)
       .delete()
   }
 
   handleLikes = async (post) => {
-    await firebase
-      .firestore()
-      .collection('posts')
-      .doc(post.id)
-      .set({...post, likes: post.likes+1})
+    if(post.likes.includes(post.createdBy)) {
+      const newLikes = post.likes.filter(each => each!==post.createdBy);
+      await firebase
+        .firestore()
+        .collection(this.COLLECTION_NAME)
+        .doc(post.id)
+        .set({
+          ...post,
+          likes: newLikes
+        })
+    } else {
+      const newLikes = [post.createdBy, ...post.likes];
+      await firebase
+        .firestore()
+        .collection(this.COLLECTION_NAME)
+        .doc(post.id)
+        .set({
+          ...post,
+          likes: newLikes
+        })
+    }
   }
 
   handleDisikes = async (post) => {
-    await firebase
-      .firestore()
-      .collection('posts')
-      .doc(post.id)
-      .set({...post, dislikes: post.dislikes+1})
+    if(post.dislikes.includes(post.createdBy)) {
+      const newDislikes = post.dislikes.filter(each => each!==post.createdBy);
+      await firebase
+        .firestore()
+        .collection(this.COLLECTION_NAME)
+        .doc(post.id)
+        .set({
+          ...post,
+          dislikes: newDislikes
+        })
+    } else {
+      const newDislikes = [post.createdBy, ...post.dislikes];
+      await firebase
+        .firestore()
+        .collection(this.COLLECTION_NAME)
+        .doc(post.id)
+        .set({
+          ...post,
+          dislikes: newDislikes
+        })
+    }
   }
 
   render() {
@@ -48,12 +83,15 @@ export class PostCard extends Component {
       message, 
       postedAt,
       likes,
-      dislikes
+      dislikes,
+      picture
     } = this.props.post;
 
     const sleep = m=> new Promise(r => setTimeout(r, m));
 
     let { animateDelete } = this.state;
+    const isLink = message.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/ig);
+    console.log(isLink)
     
     return (
       <Flex
@@ -61,7 +99,7 @@ export class PostCard extends Component {
         justifyContent='center'
         py={3}
         mt={10}
-        width={0.5}
+        width={[0.9, null, 0.5]}
       >
         <Card
           bg='white'
@@ -79,16 +117,18 @@ export class PostCard extends Component {
           <Flex
             alignItems='center'
           >
+            <Image src={picture} width={60} style={{borderRadius: '40%', marginRight: 10}} />
             <Flex
               flexDirection='column'
               justifyContent='space-between'
+              alignItems='flex-start'
               width={1}
             >
               <Text fontSize={16} fontWeight={600} color="#2A2A2A" py={2}>
                 {createdBy}
               </Text>
               <Text fontSize={12} fontStyle="italic" color="grey">
-                {postedAt}
+                {new Date(postedAt).toUTCString()}
               </Text>
             </Flex>
           </Flex>
@@ -96,6 +136,15 @@ export class PostCard extends Component {
             <Text fontWeight={400} fontSize='16px' py={4}>
               {message}
             </Text>
+            {isLink && (
+              <Box width="150px">
+                <Preview
+                  url={message}
+                  loadingText="loading..."
+                  notFound="URL Not Found!"
+                />
+              </Box>
+            )}
           </Box>
           <Flex
             my={3}
@@ -103,11 +152,11 @@ export class PostCard extends Component {
           >
             <Text fontSize={1} onClick={() => this.handleDisikes(this.props.post)}>
               <span  role="img" aria-label="dislike" style={{...iconStyle, marginRight: 4}}>👎</span>
-              {dislikes}
+              {dislikes.length}
             </Text>
             <Text fontSize={1} onClick={() => this.handleLikes(this.props.post)}>
               <span  role="img" aria-label="like" style={iconStyle}>❤️</span>
-              {likes}
+              {likes.length}
             </Text>
             <Image 
               src='https://image.flaticon.com/icons/svg/60/60761.svg'

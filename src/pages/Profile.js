@@ -35,7 +35,6 @@ export const Profile = () => {
             id: doc.id,
             ...doc.data(),
           }));
-          console.log(newPosts);
           setPosts(newPosts);
         });
     fetchPosts();
