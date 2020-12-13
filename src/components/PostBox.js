@@ -12,9 +12,7 @@ export const PostBox = ()=> {
 
   const { currentUser } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     await db
       .collection('posts')
       .add({
@@ -25,7 +23,6 @@ export const PostBox = ()=> {
         dislikes: [],
         postedAt: new Date().toUTCString()
       })
-    setPost('');
   }
 
   useEffect(() =>{
@@ -46,29 +43,29 @@ export const PostBox = ()=> {
         width={1}
         className='animate__animated animate__bounceInDown'
       >
-          <Textarea
-            id='post'
-            name='post'
-            value={post}
-            onChange={e => setPost(e.currentTarget.value)}
-            style={{borderRadius:5}}
-            placeholder='I want to say...'
-          />
-          <Button
-            onClick={handleSubmit}
-            color='#fbd46d'
-            bg='#07031a'
-            my={3}
-            width={1}
-            style={{cursor: 'pointer'}}
-          >
-            Toot
-          </Button>
-          <Text fontStyle="italic" fontWeight={600} textAlign="center">
-            Honey tip <span role="img" aria-label="honey">🍯</span>: Just tapp tapp at center of a post to like
-          </Text>
+        <Textarea
+          id='post'
+          name='post'
+          value={post}
+          onChange={e => setPost(e.currentTarget.value)}
+          style={{borderRadius:5}}
+          placeholder='I want to say...'
+        />
+        <Button
+          onClick={handleSubmit}
+          color='#fbd46d'
+          bg='#07031a'
+          my={3}
+          width={1}
+          style={{cursor: 'pointer'}}
+        >
+          Toot
+        </Button>
+        <Text fontStyle="italic" fontWeight={600} textAlign="center">
+          Honey tip <span role="img" aria-label="honey">🍯</span>: Just tapp tapp at center of a post to like
+        </Text>
       </Box>
-      {error.length>0 && alert(error)}
+      {error.length>0 && <Text color="red">{error}</Text>}
     </Flex>
   )
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Flex, Card, Text, Image, Box } from 'rebass';
 import { ReactTinyLink } from 'react-tiny-link';
+import { useAuth } from '../contexts/AuthContext'
 
 import 'animate.css'
 import firebase from '../firebase'
@@ -15,6 +16,11 @@ export class PostCard extends Component {
       ...this.props.post,
       likes: 0
     }
+  }
+
+  componentDidMount() {
+    const { currentUser } = useAuth();
+    console.log(currentUser)
   }
 
   COLLECTION_NAME = 'posts';
@@ -75,6 +81,14 @@ export class PostCard extends Component {
         })
     }
   }
+  
+  sleep = m=> new Promise(r => setTimeout(r, m));
+
+  handleDelete = async (id)=> {
+    this.setState({animateDelete:true});
+    await this.sleep(500);
+    this.deletePost(id)
+  }
 
   render() {
     const {
@@ -87,11 +101,8 @@ export class PostCard extends Component {
       picture
     } = this.props.post;
 
-    const sleep = m=> new Promise(r => setTimeout(r, m));
-
     let { animateDelete } = this.state;
     const isLink = message.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/ig);
-    console.log(isLink)
     
     return (
       <Flex
@@ -134,7 +145,7 @@ export class PostCard extends Component {
           </Flex>
           <Box onDoubleClick={() => this.handleLikes(this.props.post)}>
             <Text fontWeight={400} fontSize='16px' py={4}>
-              {message}
+              {!isLink && message}
             </Text>
             {isLink && (
               <Box width={1} height={160}>
@@ -143,7 +154,7 @@ export class PostCard extends Component {
                   showGraphic={true}
                   maxLine={2}
                   minLine={1}
-                  url="https://www.amazon.com/Steve-Madden-Mens-Jagwar-10-5/dp/B016X44MKA/ref=lp_18637582011_1_1?srs=18637582011&ie=UTF8&qid=1550721409&sr=8-1"
+                  url={message}
                 />
               </Box>
             )}
@@ -160,12 +171,12 @@ export class PostCard extends Component {
               <span  role="img" aria-label="like" style={iconStyle}>❤️</span>
               {likes.length}
             </Text>
-            <Image 
+            {createdBy===(currentUser.email) && <Image 
               src='https://image.flaticon.com/icons/svg/60/60761.svg'
               width={15}
               style={iconStyle}
-              onClick={async()=> {this.setState({animateDelete:true});await sleep(500);this.deletePost(id)}}
-            />
+              onClick={(id) => this.handleDelete(id)}
+            />}
           </Flex>
         </Card>
       </Flex>
