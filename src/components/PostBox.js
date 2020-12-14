@@ -7,7 +7,7 @@ import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext';
 
 export const PostBox = ()=> {
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState('');
   const [error, setError] = useState('');
 
   const { currentUser } = useAuth();
@@ -17,7 +17,7 @@ export const PostBox = ()=> {
       .collection('posts')
       .add({
         message: post,
-        createdBy: currentUser.email,
+        createdBy: currentUser.displayName ||currentUser.email,
         picture: currentUser.photoURL,
         likes: [],
         dislikes: [],
@@ -26,7 +26,7 @@ export const PostBox = ()=> {
   }
 
   useEffect(() =>{
-    if(post===''){
+    if(!(post.length >= 0)){
       setError('Cannot post empty toot')
     }
   }, [post])
@@ -61,11 +61,13 @@ export const PostBox = ()=> {
         >
           Toot
         </Button>
-        <Text fontStyle="italic" fontWeight={600} textAlign="center">
-          Honey tip <span role="img" aria-label="honey">🍯</span>: Just tapp tapp at center of a post to like
-        </Text>
+        {error.length>0 
+          ? <Text color="red" textAlign="center" mt={10} >{error}</Text>
+          : <Text fontStyle="italic" fontWeight={600} textAlign="center">
+            Honey tip <span role="img" aria-label="honey">🍯</span>: Just tapp tapp at center of a post to like
+          </Text>
+        }
       </Box>
-      {error.length>0 && <Text color="red">{error}</Text>}
     </Flex>
   )
 }

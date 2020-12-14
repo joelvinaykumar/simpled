@@ -2,8 +2,9 @@ import React from "react"
 import { AuthProvider } from "./contexts/AuthContext"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import { PrivateRoute } from "./components"
+import { PrivateRoute, NotFoundPage } from "./components"
 import { Home, Login, SignUp, Profile } from './pages'
+import './App.css'
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/login" component={Login} />
+            <Route path="*" component={NotFoundPage} />
           </Switch>
         </AuthProvider>
       </Router>
