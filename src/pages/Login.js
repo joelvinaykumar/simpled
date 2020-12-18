@@ -57,9 +57,14 @@ export const Login = () => {
         height={400}
       >
         <Image style={{borderRadius: 20}} src={logo} width={100} backgroundColor="black" />
-        <b><Text mt={30} fontSize={18} textAlign="center">
-          Simpled is simplified "simplified"
-        </Text></b>
+        <b>
+          <Text mt={30} fontSize={18} textAlign="center">
+            Simpled is simplified "simplified"
+          </Text>
+          <Text mt={20} fontSize={14} width={350} textAlign="center">
+            Share your thoughts quickly in 100 words or simply a link. Just like twitter.
+          </Text>
+        </b>
         <Text mt={20} fontSize={14} width={350} textAlign="center">
           Don't have an account? SignUp <Link to="/signup">here</Link>
         </Text>
