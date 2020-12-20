@@ -120,6 +120,7 @@ export class PostCard extends Component {
     let { animateDelete } = this.state;
     const isLink = message.match(
       new RegExp(
+        // eslint-disable-next-line
         /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi
       )
     );
