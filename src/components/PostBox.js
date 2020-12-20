@@ -17,7 +17,7 @@ export const PostBox = ()=> {
       .collection('posts')
       .add({
         message: post,
-        createdBy: currentUser.displayName ||currentUser.email,
+        createdBy: currentUser.displayName,
         picture: currentUser.photoURL,
         likes: [],
         dislikes: [],

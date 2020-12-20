@@ -12,6 +12,7 @@ export const CenterContainer = () => {
     const fetchPosts = () =>
       db
         .collection("posts")
+        .orderBy('postedAt', 'desc')
         .onSnapshot((snapshot) => {
           const newPosts = snapshot.docs.map((doc) => ({
             id: doc.id,

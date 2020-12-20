@@ -7,11 +7,11 @@ import firebase from "../firebase";
 import { simplifyTime } from "../util";
 import { useAuth } from "../contexts/AuthContext";
 
-let currentUserEmail = "";
+let currentUserName = "";
 
 const InterimComponent = () => {
   const { currentUser } = useAuth();
-  currentUserEmail = currentUser.email;
+  currentUserName = currentUser.displayName;
   return <></>;
 };
 
@@ -27,7 +27,7 @@ export class PostCard extends Component {
   }
 
   COLLECTION_NAME = "posts";
-  CURRENT_USER_EMAIL = currentUserEmail;
+  CURRENT_USER_NAME = currentUserName;
 
   deletePost = async (id) => {
     try {
@@ -105,6 +105,7 @@ export class PostCard extends Component {
     await this.sleep(500);
     this.deletePost(id);
   };
+  
 
   render() {
     const {
@@ -184,7 +185,7 @@ export class PostCard extends Component {
               </Box>
             )}
           </Box>
-          <Flex my={3} height={30} justifyContent="space-between">
+          <Flex my={3} height={30} justifyContent="space-between" alignItems="center">
             <Box
               width={40}
               height={40}
@@ -208,7 +209,7 @@ export class PostCard extends Component {
               </span>
               {likes.length}
             </Text>
-            {createdBy === this.CURRENT_USER_EMAIL && (
+            {(createdBy !== this.CURRENT_USER_NAME) && (
               <Image
                 src="https://image.flaticon.com/icons/svg/60/60761.svg"
                 width={15}
