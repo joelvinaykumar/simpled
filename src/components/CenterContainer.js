@@ -28,7 +28,7 @@ export const CenterContainer = () => {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      width="98.5vw"
+      height="100%"
     >
       <PostBox />
       <Flex

@@ -217,6 +217,7 @@ export class PostCard extends Component {
                 height={15}
                 className="action-button"
                 onClick={(id) => this.handleDelete(id)}
+                style={{ cursor: 'pointer' }}
               />
             )}
           </Flex>

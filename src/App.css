@@ -8,22 +8,9 @@
 
 body {
   background-color: #f4f6ff;
-  overflow: hidden;
   height: 100px;
 }
 
 .animate__animated {
   animation-duration: 500ms;
-}
-
-.action_button {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.action-button:hover {
-  background-color: rgba(19, 15, 64, 0.4);
-  border-radius: 50%;
 }
