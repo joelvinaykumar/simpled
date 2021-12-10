@@ -41,7 +41,12 @@ export const CenterContainer = () => {
         mt={-80}
       >
         {posts.map((item) => (
-          <PostCard key={item.id} post={item} changeFlag={changeFlag} setChangeFlag={setChangeFlag} />
+          <PostCard
+            key={item.id}
+            post={item}
+            changeFlag={changeFlag}
+            setChangeFlag={setChangeFlag}
+          />
         ))}
       </Flex>
     </Flex>

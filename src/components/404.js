@@ -17,7 +17,7 @@ export class NotFoundPage extends Component {
         <img
           alt=""
           width={200}
-          src='https://image.flaticon.com/icons/svg/2748/2748638.svg'
+          src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png"
           className="not-found-icon"
         />
         <p className="not-found-caption" style={{

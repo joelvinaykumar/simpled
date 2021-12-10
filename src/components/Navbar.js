@@ -16,7 +16,7 @@ export const Navbar = () => {
   const history = useHistory();
 
   useEffect(() => {
-    setProfilePicture(auth.currentUser.photoURL || default_pic);
+    setProfilePicture(currentUser.photoURL || default_pic);
   },[currentUser]);
 
   const handleLogout = async () => {

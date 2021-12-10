@@ -221,7 +221,7 @@ export class PostCard extends Component {
                 onClick={() => this.handleDelete(id)}
                 style={{ cursor: "pointer" }}
               >
-                <span role="img" aria-label="like">
+                <span role="img" aria-label="delete">
                   🗑️
                 </span>
               </Text>
