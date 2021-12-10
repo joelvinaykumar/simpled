@@ -44,10 +44,10 @@ export class PostCard extends Component {
 
   handleLikes = async (post) => {
     if (
-      post.likes.includes(post.createdBy) ||
-      post.dislikes.includes(post.createdBy)
+      post.likes.includes(this.CURRENT_USER_NAME) ||
+      post.dislikes.includes(this.CURRENT_USER_NAME)
     ) {
-      const newLikes = post.likes.filter((each) => each !== post.createdBy);
+      const newLikes = post.likes.filter((each) => each !== this.CURRENT_USER_NAME);
       await firebase
         .firestore()
         .collection(this.COLLECTION_NAME)
@@ -57,7 +57,7 @@ export class PostCard extends Component {
           likes: newLikes,
         });
     } else {
-      const newLikes = [post.createdBy, ...post.likes];
+      const newLikes = [this.CURRENT_USER_NAME, ...post.likes];
       await firebase
         .firestore()
         .collection(this.COLLECTION_NAME)
@@ -75,7 +75,7 @@ export class PostCard extends Component {
       post.dislikes.includes(post.createdBy)
     ) {
       const newDislikes = post.dislikes.filter(
-        (each) => each !== post.createdBy
+        (each) => each !== this.CURRENT_USER_NAME
       );
       await firebase
         .firestore()
@@ -86,7 +86,7 @@ export class PostCard extends Component {
           dislikes: newDislikes,
         });
     } else {
-      const newDislikes = [post.createdBy, ...post.dislikes];
+      const newDislikes = [this.CURRENT_USER_NAME, ...post.dislikes];
       await firebase
         .firestore()
         .collection(this.COLLECTION_NAME)
@@ -101,14 +101,14 @@ export class PostCard extends Component {
   sleep = (m) => new Promise((r) => setTimeout(r, m));
 
   handleDelete = async (id) => {
-    this.setState({ animateDelete: true });
-    await this.sleep(500);
-    this.deletePost(id);
+    await this.deletePost(id);
+    this.props.setChangeFlag(!this.props.changeFlag);
   };
   
 
   render() {
     const {
+      id,
       createdBy,
       message,
       postedAt,
@@ -192,6 +192,7 @@ export class PostCard extends Component {
               height={40}
               className="action_button"
               onClick={() => this.handleDisikes(this.props.post)}
+              style={{ cursor: "pointer" }}
             >
               <span role="img" aria-label="dislike" style={{ marginRight: 4 }}>
                 👎
@@ -204,21 +205,26 @@ export class PostCard extends Component {
               height={40}
               className="action_button"
               onClick={() => this.handleLikes(this.props.post)}
+              style={{ cursor: "pointer" }}
             >
               <span role="img" aria-label="like">
                 ❤️
               </span>
               {likes.length}
             </Text>
-            {(createdBy !== this.CURRENT_USER_NAME) && (
-              <Image
-                src="https://image.flaticon.com/icons/svg/60/60761.svg"
-                width={15}
-                height={15}
-                className="action-button"
-                onClick={(id) => this.handleDelete(id)}
-                style={{ cursor: 'pointer' }}
-              />
+            {(createdBy === this.CURRENT_USER_NAME) && (
+              <Text
+                fontSize={1}
+                width={40}
+                height={40}
+                className="action_button"
+                onClick={() => this.handleDelete(id)}
+                style={{ cursor: "pointer" }}
+              >
+                <span role="img" aria-label="like">
+                  🗑️
+                </span>
+              </Text>
             )}
           </Flex>
         </Card>

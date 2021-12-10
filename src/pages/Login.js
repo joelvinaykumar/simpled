@@ -38,7 +38,7 @@ export const Login = () => {
           backgroundImage: "url('https://images.unsplash.com/photo-1554177255-61502b352de3?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80')",
           backgroundSize: "cover"
         }}
-s      />
+      />
       <Flex
         flexDirection='column'
         alignItems='center'
@@ -66,8 +66,12 @@ s      />
           Log in With Google |
           <Image src={google} width={15} />
         </Button>
-        <Text color="red" fontSize={12} mt={20}>{error}</Text>
-        <Text color="green" fontSize={12} mt={20}>{success}</Text>
+        <Box
+          width={0.8}
+        >
+          <Text color="red" fontSize={12} mt={20}>{error}</Text>
+          <Text color="green" fontSize={12} mt={20}>{success}</Text>
+        </Box>
       </Flex>
     </Flex>
   )

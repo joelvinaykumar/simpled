@@ -25,8 +25,7 @@ export const Profile = () => {
     lastSigned: currentUser.metadata.lastSignInTime,
   };
 
-  useEffect(() => {
-    const fetchPosts = () =>
+  const fetchPosts = () =>
       db
         .collection("posts")
         .where("createdBy", "==", currentUser.email)
@@ -37,12 +36,16 @@ export const Profile = () => {
           }));
           setPosts(newPosts);
         });
+
+  useEffect(() => {
     fetchPosts();
   }, [currentUser.email, profile]);
 
   useEffect(() => {
+    profile.createdAt = new Date(profile.createdAt).toLocaleDateString("te-IN", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    profile.lastSigned = new Date(profile.lastSigned).toLocaleDateString("te-IN", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     setUser(profile);
-  }, [profile]);
+  }, []);
 
   const labels = {
     displayName: "Name",
@@ -57,7 +60,8 @@ export const Profile = () => {
       await updateProfile(name, picture);
       setSuccess("Profile updated");
     } catch (e) {
-      setError(e.message);
+      let { error } = JSON.parse(e.message)
+      setError(error.message);
     }
   };
 
@@ -78,9 +82,9 @@ export const Profile = () => {
       <Flex justifyContent="space-around" alignItems="center" height="80vh">
         <Card
           bg="white"
-          px={4}
+          px={2}
           py={2}
-          width={400}
+          width={500}
           minHeight={300}
           style={{
             borderRadius: 8,
@@ -129,7 +133,7 @@ export const Profile = () => {
             onChange={(e) => setName(e.currentTarget.value)}
             name="name"
             style={{ borderRadius: 5 }}
-            placeholder="John Doe"
+            placeholder={profile.displayName}
           />
           <Input
             my={3}

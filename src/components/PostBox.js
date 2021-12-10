@@ -13,23 +13,24 @@ export const PostBox = ()=> {
   const { currentUser } = useAuth();
 
   const handleSubmit = async () => {
-    await db
-      .collection('posts')
-      .add({
-        message: post,
-        createdBy: currentUser.displayName,
-        picture: currentUser.photoURL,
-        likes: [],
-        dislikes: [],
-        postedAt: new Date().toUTCString()
-      })
-  }
-
-  useEffect(() =>{
-    if(!(post.length >= 0)){
-      setError('Cannot post empty toot')
+    try {
+      if(post.length === 0){
+        return setError('Cannot post empty toot')
+      }
+      await db
+        .collection('posts')
+        .add({
+          message: post,
+          createdBy: currentUser.displayName,
+          picture: currentUser.photoURL,
+          likes: [],
+          dislikes: [],
+          postedAt: new Date().toUTCString()
+        })
+    } catch (error) {
+      setError(error.message)
     }
-  }, [post])
+  }
   
   return (
     <Flex

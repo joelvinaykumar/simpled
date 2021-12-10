@@ -7,9 +7,9 @@ import { PostBox } from "./PostBox";
 
 export const CenterContainer = () => {
   const [posts, setPosts] = useState([]);
+  const [changeFlag, setChangeFlag] = useState(false);
 
-  useEffect(() => {
-    const fetchPosts = () =>
+  const fetchPosts = () =>
       db
         .collection("posts")
         .orderBy('postedAt', 'desc')
@@ -20,6 +20,8 @@ export const CenterContainer = () => {
           }));
           setPosts(newPosts);
         });
+
+  useEffect(() => {
     fetchPosts();
   }, []);
 
@@ -39,7 +41,7 @@ export const CenterContainer = () => {
         mt={-80}
       >
         {posts.map((item) => (
-          <PostCard key={item.id} post={item} />
+          <PostCard key={item.id} post={item} changeFlag={changeFlag} setChangeFlag={setChangeFlag} />
         ))}
       </Flex>
     </Flex>
