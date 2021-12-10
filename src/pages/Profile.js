@@ -28,7 +28,7 @@ export const Profile = () => {
   const fetchPosts = () =>
       db
         .collection("posts")
-        .where("createdBy", "==", currentUser.email)
+        .where("createdBy", "==", currentUser.displayName)
         .onSnapshot((snapshot) => {
           const newPosts = snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -39,11 +39,12 @@ export const Profile = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [currentUser.email, profile]);
+  }, [profile]);
 
   useEffect(() => {
     profile.createdAt = new Date(profile.createdAt).toLocaleDateString("te-IN", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     profile.lastSigned = new Date(profile.lastSigned).toLocaleDateString("te-IN", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    profile.emailVerified = profile.emailVerified? "Yes": "No";
     setUser(profile);
   }, []);
 

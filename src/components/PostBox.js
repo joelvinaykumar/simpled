@@ -1,5 +1,5 @@
 import 'animate.css'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Flex, Button, Text } from 'rebass';
 import { Textarea } from '@rebass/forms';
 
