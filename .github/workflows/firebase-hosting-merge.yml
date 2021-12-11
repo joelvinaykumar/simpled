@@ -18,3 +18,10 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SIMPLED_B2B61 }}'
           channelId: live
           projectId: simpled-b2b61
+        env:
+          REACT_APP_API_KEY: AIzaSyDm3Zrt4NedMl4IMCDVg4MvhhZJhIZFEQQ
+          REACT_APP_AUTH_DOMAIN: simpled-b2b61.firebaseapp.com
+          REACT_APP_PROJECT_ID: simpled-b2b61
+          REACT_APP_STORAGE_BUCKET: simpled-b2b61.appspot.com
+          REACT_APP_MESSAGING_SENDER_ID: 912228329861
+          REACT_APP_APP_ID: 1:912228329861:web:7d067024b0c6d4993ffce
