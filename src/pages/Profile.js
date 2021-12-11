@@ -1,5 +1,5 @@
 import "animate.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Text, Flex, Button, Card } from "rebass";
 import { Input } from "@rebass/forms";
 
@@ -25,28 +25,30 @@ export const Profile = () => {
     lastSigned: currentUser.metadata.lastSignInTime,
   };
 
-  const fetchPosts = () =>
-      db
-        .collection("posts")
-        .where("createdBy", "==", currentUser.displayName)
-        .onSnapshot((snapshot) => {
-          const newPosts = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setPosts(newPosts);
-        });
+  const fetchPosts = useCallback(() =>
+    db
+      .collection("posts")
+      .where("createdBy", "==", currentUser.displayName)
+      .onSnapshot((snapshot) => {
+        const newPosts = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPosts(newPosts);
+      }),
+    [currentUser.displayName]
+  )
 
   useEffect(() => {
     fetchPosts();
-  }, [profile]);
+  }, [fetchPosts]);
 
   useEffect(() => {
     profile.createdAt = new Date(profile.createdAt).toLocaleDateString("te-IN", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     profile.lastSigned = new Date(profile.lastSigned).toLocaleDateString("te-IN", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     profile.emailVerified = profile.emailVerified? "Yes": "No";
     setUser(profile);
-  }, []);
+  }, [profile]);
 
   const labels = {
     displayName: "Name",
