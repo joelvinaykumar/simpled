@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { Flex, Image } from "rebass";
 import { useAuth } from "../contexts/AuthContext";
-import { auth } from '../firebase';
 
 import logo from "../assets/logo.png";
 
