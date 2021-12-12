@@ -114,16 +114,11 @@ export class PostCard extends Component {
       postedAt,
       likes,
       dislikes,
-      picture,
+      link,
+      picture
     } = this.props.post;
 
     let { animateDelete } = this.state;
-    const isLink = message.match(
-      new RegExp(
-        // eslint-disable-next-line
-        /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi
-      )
-    );
 
     return (
       <Flex
@@ -152,7 +147,7 @@ export class PostCard extends Component {
         >
           <Flex alignItems="center">
             <Image
-              src={picture}
+              src={createdBy.picture}
               width={60}
               style={{ borderRadius: "40%", marginRight: 10 }}
             />
@@ -163,7 +158,7 @@ export class PostCard extends Component {
               width={1}
             >
               <Text fontSize={16} fontWeight={600} color="#2A2A2A" py={2}>
-                {createdBy}
+                {createdBy.name}
               </Text>
               <Text fontSize={12} fontStyle="italic" color="grey">
                 {simplifyTime(postedAt)}
@@ -172,20 +167,28 @@ export class PostCard extends Component {
           </Flex>
           <Box>
             <Text fontWeight={400} fontSize="16px" py={4}>
-              {!isLink && message}
+              {message}
             </Text>
-            {isLink && (
+            {link && (
               <Box width={1} height={160}>
                 <ReactTinyLink
                   cardSize="small"
                   showGraphic={true}
                   maxLine={3}
                   minLine={2}
-                  url={message}
+                  url={link}
                 />
               </Box>
             )}
           </Box>
+          {picture && (
+            <Flex justifyContent="center">
+              <Image
+                src={picture}
+                style={{ borderRadius: "10px" }}
+              />
+            </Flex>
+          )}
           <Flex my={3} height={30} justifyContent="space-between" alignItems="center">
             <Box
               width={40}
@@ -212,7 +215,7 @@ export class PostCard extends Component {
               </span>
               {likes.length}
             </Text>
-            {(createdBy === this.CURRENT_USER_NAME) && (
+            {(createdBy.name == this.CURRENT_USER_NAME) && (
               <Text
                 fontSize={1}
                 width={40}

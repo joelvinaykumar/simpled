@@ -1,28 +1,41 @@
 import 'animate.css'
 import React, { useState } from 'react';
 import { Box, Flex, Button, Text } from 'rebass';
-import { Textarea } from '@rebass/forms';
+import { Textarea, Input } from '@rebass/forms';
 
-import { db } from '../firebase'
+import { db, storage } from '../firebase'
 import { useAuth } from '../contexts/AuthContext';
 
 export const PostBox = ()=> {
   const [post, setPost] = useState('');
   const [error, setError] = useState('');
+  const [link, setLink] = useState('');
+  const [pic, setPic] = useState(null);
 
   const { currentUser } = useAuth();
 
   const handleSubmit = async () => {
     try {
+      let fileRef, pictureUrl= "";
       if(post.length === 0){
         return setError('Cannot post empty toot')
+      }
+      if(pic) {
+        let storageRef = storage.ref();
+        fileRef = storageRef.child(pic.name)
+        await fileRef.put(pic)
+        pictureUrl = await fileRef.getDownloadURL();
       }
       await db
         .collection('posts')
         .add({
           message: post,
-          createdBy: currentUser.displayName,
-          picture: currentUser.photoURL,
+          createdBy: {
+            name: currentUser.displayName,
+            picture: currentUser.photoURL 
+          },
+          link,
+          picture: pictureUrl,
           likes: [],
           dislikes: [],
           postedAt: new Date().toUTCString()
@@ -31,6 +44,8 @@ export const PostBox = ()=> {
       setError(error.message)
     }
   }
+
+  const handlePicUpload = e => setPic(e.target.files[0]);
   
   return (
     <Flex
@@ -51,6 +66,38 @@ export const PostBox = ()=> {
           onChange={e => setPost(e.currentTarget.value)}
           style={{borderRadius:5}}
           placeholder='I want to say...'
+        />
+        <Input
+          type="url"
+          value={link}
+          placeholder="Attach your link here"
+          mt={2}
+          style={{borderRadius:5}}
+          onChange={e => setLink(e.target.value)}
+        />
+        <label
+          htmlFor="pic"
+          style={{
+            width: "100%",
+            cursor: "pointer",
+            borderRadius: "5px",
+            backgroundColor: "#07031a",
+            color: "#fbd46d",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "8px 0",
+            marginTop: 15
+          }}
+        >
+          <span role="img" aria-label="camera" >Upload a picture instead 📷</span>
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          id="pic"
+          onChange={e => handlePicUpload(e)}
+          style={{ display: "none" }}
         />
         <Button
           onClick={handleSubmit}
