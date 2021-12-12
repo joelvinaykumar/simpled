@@ -215,7 +215,7 @@ export class PostCard extends Component {
               </span>
               {likes.length}
             </Text>
-            {(createdBy.name == this.CURRENT_USER_NAME) && (
+            {(createdBy.name === this.CURRENT_USER_NAME) && (
               <Text
                 fontSize={1}
                 width={40}
