@@ -48,7 +48,7 @@ export const Login = () => {
         <Image style={{borderRadius: 20}} src={logo} width={100} backgroundColor="black" />
         <b>
           <Text mt={30} fontSize={18} textAlign="center">
-            Simpled is simplified "simplified"
+            Simpled is simplified "twitter"
           </Text>
         </b>
         <Text mt={20} fontSize={14} width={350} textAlign="center">

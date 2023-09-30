@@ -5,15 +5,6 @@ import { ReactTinyLink } from "react-tiny-link";
 import "animate.css";
 import firebase from "../firebase";
 import { simplifyTime } from "../util";
-import { useAuth } from "../contexts/AuthContext";
-
-let currentUserName = "";
-
-const InterimComponent = () => {
-  const { currentUser } = useAuth();
-  currentUserName = currentUser.displayName;
-  return <></>;
-};
 
 export class PostCard extends Component {
   constructor(props) {
@@ -27,7 +18,7 @@ export class PostCard extends Component {
   }
 
   COLLECTION_NAME = "posts";
-  CURRENT_USER_NAME = currentUserName;
+  CURRENT_USER_NAME = this.props.currentUser.displayName;
 
   deletePost = async (id) => {
     try {
@@ -41,7 +32,6 @@ export class PostCard extends Component {
       console.error(e);
     }
   };
-
   handleLikes = async (post) => {
     if (
       post.likes.includes(this.CURRENT_USER_NAME) ||
@@ -71,8 +61,8 @@ export class PostCard extends Component {
 
   handleDisikes = async (post) => {
     if (
-      post.likes.includes(post.createdBy) ||
-      post.dislikes.includes(post.createdBy)
+      post.likes.includes(this.CURRENT_USER_NAME) ||
+      post.dislikes.includes(this.CURRENT_USER_NAME)
     ) {
       const newDislikes = post.dislikes.filter(
         (each) => each !== this.CURRENT_USER_NAME
@@ -128,7 +118,6 @@ export class PostCard extends Component {
         mt={10}
         width={[0.9, null, 0.5]}
       >
-        <InterimComponent />
         <Card
           bg="white"
           px={4}

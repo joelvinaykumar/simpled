@@ -4,8 +4,10 @@ import { PostCard } from "./PostCard";
 import { db } from "../firebase";
 
 import { PostBox } from "./PostBox";
+import { useAuth } from "../contexts/AuthContext";
 
 export const CenterContainer = () => {
+  const { currentUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const [changeFlag, setChangeFlag] = useState(false);
 
@@ -40,14 +42,15 @@ export const CenterContainer = () => {
         width={1}
         mt={-80}
       >
-        {posts.map((item) => (
+        {posts.length? posts.map((item) => (
           <PostCard
             key={item.id}
             post={item}
+            currentUser={currentUser}
             changeFlag={changeFlag}
             setChangeFlag={setChangeFlag}
           />
-        ))}
+        )): <p>No posts</p>}
       </Flex>
     </Flex>
   );

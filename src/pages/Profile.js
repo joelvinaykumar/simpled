@@ -99,7 +99,7 @@ export const Profile = () => {
           Your posts
         </Text>
         {posts.map((item) => (
-          <PostCard key={item.id} post={item} />
+          <PostCard key={item.id} post={item} currentUser={currentUser} />
         ))}
       </Flex>
     </div>

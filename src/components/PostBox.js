@@ -46,7 +46,7 @@ export const PostBox = ()=> {
   }
 
   const handlePicUpload = e => setPic(e.target.files[0]);
-  
+  console.log(pic)
   return (
     <Flex
       alignItems='center'
@@ -75,6 +75,7 @@ export const PostBox = ()=> {
           style={{borderRadius:5}}
           onChange={e => setLink(e.target.value)}
         />
+        {pic? <img src={pic} alt="uploaded media" />: null}
         <label
           htmlFor="pic"
           style={{
